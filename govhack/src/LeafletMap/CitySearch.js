@@ -15,7 +15,7 @@ class CitySearch extends React.Component {
 
     componentDidMount(){
 
-        test.testm();
+        // test.testm();
 
         DataHelper.getSA2Data().then(
             (result) => {
