@@ -1,24 +1,24 @@
-import logo from './logo.svg';
+import React from 'react';
+import Header from './Header/HeaderBar';
+// import { createMuiTheme } from '@material-ui/core/styles';
+// import { ThemeProvider } from '@material-ui/styles';
+// import 'typeface-roboto';
 import './App.css';
+
+// const theme = createMuiTheme({
+//   typography: {
+//     htmlFontSize: 18,
+//     fontFamily: "Roboto",
+//   },
+// });
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    // <ThemeProvider theme={theme}>
+        <div id="root">
+          <Header />
+        </div>
+      // </ThemeProvider>
   );
 }
 
