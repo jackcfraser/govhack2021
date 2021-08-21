@@ -2,6 +2,7 @@ import React from 'react';
 import Select from 'react-select';
 import styled from 'styled-components';
 import DataHelper from '../Helpers/DataHelper';
+import test from '../test';
 
 class CitySearch extends React.Component {
     constructor(props) {
@@ -13,6 +14,8 @@ class CitySearch extends React.Component {
     }
 
     componentDidMount(){
+
+        test.testm();
 
         DataHelper.getSA2Data().then(
             (result) => {
