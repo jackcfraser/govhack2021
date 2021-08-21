@@ -4,8 +4,9 @@ class test {
     static testm() {
 			try {
                 var f = require(process.env.REACT_APP_PATH);
-                console.log(typeof f);
-				Papa.parse('this,is,a,test,to,be,parsed', {
+				var t = String(f);
+				console.log(typeof t);
+				Papa.parse(t, {
 					complete: results => {
                         console.log(results.data);
                         
