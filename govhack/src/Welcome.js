@@ -11,7 +11,7 @@ const GridContainer = styled(Grid)`
 class Welcome extends React.Component {
     render() {
         return (
-            <GridContainer container justify="center" alignItems="center" direction="column">
+            <GridContainer container justifyContent="center" alignItems="center" direction="column">
                 <Grid item xs={3} />
                 <Grid item xs={6}>
                     <Typography variant="h2" align="center">Welcome</Typography><br />

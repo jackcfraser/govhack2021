@@ -11,9 +11,8 @@ import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import { Drawer } from '@material-ui/core';
 import { List, ListItem, ListItemIcon, ListItemText } from '@material-ui/core';
 import { Route, Link, BrowserRouter as Router } from 'react-router-dom';
-// import Stocks from '../Stocks';
 import Welcome from '../Welcome';
-// import LeafletMap from '../LeafletMap/LeafletMap';
+import LeafletMap from '../LeafletMap/LeafletMap';
 
 const styles = theme => ({
 	root: {
@@ -65,14 +64,11 @@ class Header extends React.Component {
 			case 'http://localhost:3000/':
 				windowTitle = 'Home';
 			break;
-			case 'http://localhost:3000/Stocks':
-				windowTitle = 'Stocks Project';
-			break;
 			case 'http://localhost:3000/Map':
 				windowTitle = 'Leaflet Project';
 			break;
 			default:
-				windowTitle = '???';
+				windowTitle = '404 Page Not Found';
 			break;
 		}
 		return windowTitle;
@@ -87,12 +83,6 @@ class Header extends React.Component {
 						<ListItem button key="Home">
 							<ListItemIcon><HomeIcon /></ListItemIcon>
 							<ListItemText primary="Home" />
-						</ListItem>
-					</Link>
-					<Link to="/Stocks">
-						<ListItem button key="Stocks Project">
-							<ListItemIcon><AccountCircleIcon /></ListItemIcon>
-							<ListItemText primary="Stocks Project" />
 						</ListItem>
 					</Link>
 					<Link to="/Map">
@@ -123,8 +113,7 @@ class Header extends React.Component {
 					</AppBar>
 				</div>
 				<Route exact path="/" component={Welcome} />
-				{/* <Route path="/Stocks" component={Stocks} /> */}
-				{/* <Route path="/Map" component={LeafletMap} /> */}
+				<Route path="/Map" component={LeafletMap} />
 			</Router>
 		);
 	}
