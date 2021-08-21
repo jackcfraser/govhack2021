@@ -1,7 +1,7 @@
 import React from 'react';
 import { Box, Drawer, Fab, Tooltip } from '@material-ui/core';
 import { List, ListItem, ListItemIcon, ListItemText } from '@material-ui/core';
-import AppsIcon from '@material-ui/icons/Apps';
+import SearchIcon from '@material-ui/icons/Search';
 import styled from 'styled-components';
 import { MapContainer, TileLayer } from 'react-leaflet';
 // import HeatMapLayer from 'react-leaflet-heatmap-layer';
@@ -10,7 +10,7 @@ import 'leaflet/dist/leaflet.css';
 import './map.css';
 // import DataHelper from '../Helpers/DataHelper.js';
 
-import GeoSearch from './GeoSearch';
+// import GeoSearch from './GeoSearch';
 
 const MapBox = styled(Box)`
     display: block;
@@ -78,8 +78,8 @@ class LeafletMap extends React.Component {
         const options = (
             <List>
                 <ListItem button key="Home">
-                    <ListItemIcon><AppsIcon /></ListItemIcon>
                     <ListItemText primary="Home" />
+                    
                 </ListItem>
             </List>
         );
@@ -92,7 +92,7 @@ class LeafletMap extends React.Component {
                 <DrawerButtonBox>
                     <Tooltip title="Show/Hide List" placement="left">
                         <Fab color="secondary" size="small" onClick={this.toggleDrawer(true)} onKeyDown={this.toggleDrawer(true)}>
-                            <AppsIcon />
+                            <SearchIcon />
                         </Fab>
                     </Tooltip>
                 </DrawerButtonBox>
