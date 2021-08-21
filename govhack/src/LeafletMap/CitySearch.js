@@ -1,65 +1,46 @@
 import React from 'react';
 import Select from 'react-select';
 import styled from 'styled-components';
-
-const StyledSelect = styled(Select)`
-    width: 350px;
-`;
+import DataHelper from '../Helpers/DataHelper';
 
 class CitySearch extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             isLoaded: false,
-            suggestions: []
+            options: {}
         }
     }
 
-    handleChange = selectValue => {
-        this.props.onValueChange(selectValue);
-    }
+    componentDidMount(){
 
-    keyDown = event => {
-        // The reason for the need to press the enter key on the autocomplete field to search is that I only have 5 API requests per minute.
-        // I haven't gotten around to set up some sort of "typing-delay" method for searching yet.
-        if (event.key === "Enter") {
-            var callURL = "https://www.alphavantage.co/query?function=SYMBOL_SEARCH&apikey=" + apiKey + "&keywords=" + event.target.value;
-            fetch(callURL)
-                .then(res => res.json())
-                .then(
-                    (result) => {
-                        var newSuggestions = [];
-                        for (var obj in result['bestMatches']) {
-                            newSuggestions.push({ value: result['bestMatches'][obj]['1. symbol'], label: result['bestMatches'][obj]['1. symbol'] + ' - ' + result['bestMatches'][obj]['2. name'] });
+        DataHelper.getSA2Data().then(
+            (result) => {
+                            this.setState({isLoaded: true, options: result}); 
+                            console.log("Success!");
+                        },
+            //TODO implement error handling
+            (error) =>  {
+                            this.setState({isLoaded: false});
+                            console.log("Failure");
                         }
-
-                        this.setState({
-                            isLoaded: true,
-                            suggestions: newSuggestions
-                        });
-                    },
-                    (error) => {
-                        this.setState({
-                            isLoaded: true,
-                            error: error
-                        });
-                    }
-                )
-        }
+        )
+        
     }
 
     render() {
-        const value = this.props.value
-        return (
-            <StyledSelect
-                inputId="react-select-single"
-                placeholder="Select stock (enter to search)"
-                options={this.state.suggestions}
-                value={value}
-                onChange={this.handleChange}
-                onKeyDown={this.keyDown}
-            />
-        );
+        // console.log(this.state.options);
+            return (
+                <Select
+                    className="basic-single"
+                    classNamePrefix="select"
+                    isClearable={true}
+                    isSearchable={true}
+                    name="cities"
+                    // options={this.state.options}
+                />
+            );
+        
     }
 }
-export default StockSearch
+export default CitySearch

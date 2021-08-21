@@ -8,7 +8,8 @@ import { MapContainer, TileLayer } from 'react-leaflet';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import './map.css';
-// import DataHelper from '../Helpers/DataHelper.js';
+import DataHelper from '../Helpers/DataHelper.js';
+import CitySearch from './CitySearch';
 
 // import GeoSearch from './GeoSearch';
 
@@ -54,6 +55,13 @@ class LeafletMap extends React.Component {
         });
     }
 
+    handleCityChange = event => {
+        this.setState({
+            selectedCityValue: event.value,
+            selectedCityName: event.label
+        });
+    }
+
     // componentDidMount() {
     //     // DataHelper.getLightData().then(
     //     //     (result) => {this.setState({isLoaded: true, heatmapData: result});},
@@ -78,7 +86,6 @@ class LeafletMap extends React.Component {
         const options = (
             <List>
                 <ListItem button key="Home">
-                    <ListItemText primary="Home" />
                     
                 </ListItem>
             </List>
@@ -93,6 +100,7 @@ class LeafletMap extends React.Component {
                     <Tooltip title="Show/Hide List" placement="left">
                         <Fab color="secondary" size="small" onClick={this.toggleDrawer(true)} onKeyDown={this.toggleDrawer(true)}>
                             <SearchIcon />
+                            
                         </Fab>
                     </Tooltip>
                 </DrawerButtonBox>
