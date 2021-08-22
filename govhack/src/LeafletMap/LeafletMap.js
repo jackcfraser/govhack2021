@@ -8,8 +8,8 @@ import { MapContainer, TileLayer } from 'react-leaflet';
 import L, { map } from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import './map.css';
-import DataHelper from '../Helpers/DataHelper.js';
 import CitySearch from './CitySearch';
+import AgeSearch from './AgeSearch';
 
 // import GeoSearch from './GeoSearch';
 
@@ -41,7 +41,7 @@ class LeafletMap extends React.Component {
             open: false,
             long: -23.3200495,
             lat: 150.5276997,
-            position: [10,10],
+            position: [10, 10],
             map: null
             // heatmapData: DataHelper.getLightData(),
             // heatmapData: heatmapData,
@@ -62,9 +62,13 @@ class LeafletMap extends React.Component {
 
 
     updateRegion = event => {
-        this.setState({position: [event.lat, event.long]});
-        const {map} = this.state;
+        this.setState({ position: [event.lat, event.long] });
+        const { map } = this.state;
         if (map) map.flyTo([event.lat, event.long]);
+    }
+
+    updateAge = event => {
+        
     }
 
     toggleDrawer = (open) => event => {
@@ -81,9 +85,12 @@ class LeafletMap extends React.Component {
 
         const options = (
             <List>
-                <ListItem button key="Home">
-                    <CitySearch onValueChange={this.updateRegion} />
-                </ListItem>
+                <ListItem><b>Region</b></ListItem>
+                <ListItem><CitySearch onValueChange={this.updateRegion} /> </ListItem>
+                <ListItem><b>Age Range</b></ListItem>
+                <ListItem><AgeSearch onValueChange={this.updateAge}/></ListItem>
+
+
             </List>
         );
 
