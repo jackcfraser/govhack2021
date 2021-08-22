@@ -10,6 +10,7 @@ import 'leaflet/dist/leaflet.css';
 import './map.css';
 import CitySearch from './CitySearch';
 import AgeSearch from './AgeSearch';
+import FamilySearch from './FamilySearch';
 
 // import GeoSearch from './GeoSearch';
 
@@ -68,7 +69,11 @@ class LeafletMap extends React.Component {
     }
 
     updateAge = event => {
-        
+
+    }
+
+    updateFamily = event => {
+
     }
 
     toggleDrawer = (open) => event => {
@@ -89,6 +94,8 @@ class LeafletMap extends React.Component {
                 <ListItem><CitySearch onValueChange={this.updateRegion} /> </ListItem>
                 <ListItem><b>Age Range</b></ListItem>
                 <ListItem><AgeSearch onValueChange={this.updateAge}/></ListItem>
+                <ListItem><b>Family Status</b></ListItem>
+                <ListItem><FamilySearch onValueChange={this.updateFamily}/></ListItem>
 
 
             </List>
