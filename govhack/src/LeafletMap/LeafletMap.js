@@ -1,12 +1,17 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Box, Drawer, Fab, Tooltip } from '@material-ui/core';
 import { List, ListItem, ListItemIcon, ListItemText } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
-import L from 'leaflet';
 import styled from 'styled-components';
+import { MapContainer, TileLayer } from 'react-leaflet';
+// import HeatMapLayer from 'react-leaflet-heatmap-layer';
+import L, { map } from 'leaflet';
+import 'leaflet/dist/leaflet.css';
 import './map.css';
+import DataHelper from '../Helpers/DataHelper.js';
 import CitySearch from './CitySearch';
-import { MapContainer, TileLayer, useMapEvents } from 'react-leaflet';
+
+// import GeoSearch from './GeoSearch';
 
 const MapBox = styled(Box)`
     display: block;
@@ -29,56 +34,96 @@ const DrawerButtonBox = styled(Box)`
     z-index: 2;
 `;
 
+class LeafletMap extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            open: false,
+            long: -23.3200495,
+            lat: 150.5276997,
+            position: [10,10],
+            map: null
+            // heatmapData: DataHelper.getLightData(),
+            // heatmapData: heatmapData,
+            // isLoaded: false
+        }
 
-function Map() {
-    const[open, setOpen] = useState(false);
-    const[pos, setPos] = useState([10,10]);
-    const[map, setMap] = useState(null);
+        delete L.Icon.Default.prototype._getIconUrl;
 
-
-
-    const updateRegion = () => {
-        setPos([10,105]);
-        const test = map;
-        test.flyTo(pos);
+        L.Icon.Default.mergeOptions({
+            iconRetinaUrl: require('leaflet/dist/images/marker-icon-2x.png'),
+            iconUrl: require('leaflet/dist/images/marker-icon.png'),
+            shadowUrl: require('leaflet/dist/images/marker-shadow.png')
+        });
     }
 
-    const options = (
-        <List>
-            <ListItem button key="Home">
-                <CitySearch />
-            </ListItem>
-        </List>
-    );
+    componentDidMount() {
+    }
 
-    return (
-        <MapBox>
-            <Drawer open={open} onClose={() => setOpen(false)} anchor="right">
+
+    updateRegion = event => {
+        this.setState({position: [event.lat, event.long]});
+        const {map} = this.state;
+        if (map) map.flyTo([event.lat, event.long]);
+    }
+
+    toggleDrawer = (open) => event => {
+        if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
+            return;
+        }
+        this.setState({
+            open: open
+        });
+    };
+
+    render() {
+        const position = [this.state.long, this.state.lat];
+
+        const options = (
+            <List>
+                <ListItem button key="Home">
+                    <CitySearch onValueChange={this.updateRegion} />
+                </ListItem>
+            </List>
+        );
+
+        return (
+            <MapBox>
+                <Drawer open={this.state.open} onClose={this.toggleDrawer(false)} anchor="right">
                     {options}
                 </Drawer>
                 <DrawerButtonBox>
                     <Tooltip title="Show/Hide List" placement="left">
-                        <Fab color="secondary" size="small" onClick={() => setOpen(true)} onKeyDown={() => setOpen(true)}>
+                        <Fab color="secondary" size="small" onClick={this.toggleDrawer(true)} onKeyDown={this.toggleDrawer(true)}>
                             <SearchIcon />
 
                         </Fab>
                     </Tooltip>
                 </DrawerButtonBox>
-            <MapContainer
-                center={{ lat: 51.505, lng: -0.09 }}
-                zoom={13}
-                scrollWheelZoom={true}
-                whenCreated={map => setMap({ map })}>
-                <TileLayer
-                    attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-                    url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                />
-            </MapContainer>
-        </MapBox>
+                <MapContainer
+                    center={position}
+                    zoom={10}
+                    maxZoom={18}
+                    attributionControl={true}
+                    zoomControl={true}
+                    doubleClickZoom={true}
+                    scrollWheelZoom={true}
+                    dragging={true}
+                    animate={true}
+                    easeLinearity={0.35}
+                    whenCreated={map => this.setState({ map })}
+                >
 
-    )
+
+
+                    <TileLayer url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png' />
+                    {/* <Circle center={position} fillColor="blue" radius={200} /> */}
+
+                </MapContainer>
+
+            </MapBox>
+        );
+    }
 }
 
-
-
-export default Map;
+export default LeafletMap
