@@ -1,13 +1,16 @@
 import React from 'react';
-import { Box, Drawer, Fab, Tooltip } from '@material-ui/core';
+import { Box, Drawer, Fab, Tooltip, Button } from '@material-ui/core';
 import { List, ListItem, ListItemIcon, ListItemText } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
 import styled from 'styled-components';
-import { MapContainer, TileLayer } from 'react-leaflet';
-// import HeatMapLayer from 'react-leaflet-heatmap-layer';
-import L, { map } from 'leaflet';
+
+import L from 'leaflet';
+import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import './map.css';
+import icon from 'leaflet/dist/images/marker-icon.png';
+import iconShadow from 'leaflet/dist/images/marker-shadow.png';
+
 import CitySearch from './CitySearch';
 import AgeSearch from './AgeSearch';
 import FamilySearch from './FamilySearch';
@@ -43,7 +46,8 @@ class LeafletMap extends React.Component {
             long: -23.3200495,
             lat: 150.5276997,
             position: [10, 10],
-            map: null
+            map: null,
+            markers: []
             // heatmapData: DataHelper.getLightData(),
             // heatmapData: heatmapData,
             // isLoaded: false
@@ -56,9 +60,17 @@ class LeafletMap extends React.Component {
             iconUrl: require('leaflet/dist/images/marker-icon.png'),
             shadowUrl: require('leaflet/dist/images/marker-shadow.png')
         });
+
+        let DefaultIcon = L.icon({
+            iconUrl: icon,
+            shadowUrl: iconShadow
+        });
+
+        L.Marker.prototype.options.icon = DefaultIcon;
     }
 
     componentDidMount() {
+        //this.addMarker();
     }
 
 
@@ -66,6 +78,8 @@ class LeafletMap extends React.Component {
         this.setState({ position: [event.lat, event.long] });
         const { map } = this.state;
         if (map) map.flyTo([event.lat, event.long]);
+        console.log("Flying to " + event.lat + ", " + event.long);
+        this.addMarker(event);
     }
 
     updateAge = event => {
@@ -74,6 +88,12 @@ class LeafletMap extends React.Component {
 
     updateFamily = event => {
 
+    }
+
+    searchLocations = event => {
+        this.setState({ position: [event.lat, event.long] });
+        const { map } = this.state;
+        this.updateRegion(event);
     }
 
     toggleDrawer = (open) => event => {
@@ -85,6 +105,17 @@ class LeafletMap extends React.Component {
         });
     };
 
+    addMarker = (e) => {
+        const { markers } = this.state
+        markers.push([e.lat, e.long])
+        for(var i=0; i<10; i++){
+            console.log(e.lat + i);
+            markers.push([e.lat + i, e.long + i])
+        }
+        
+        this.setState({ markers })
+    }
+
     render() {
         const position = [this.state.long, this.state.lat];
 
@@ -93,9 +124,10 @@ class LeafletMap extends React.Component {
                 <ListItem><b>Region</b></ListItem>
                 <ListItem><CitySearch onValueChange={this.updateRegion} /> </ListItem>
                 <ListItem><b>Age Range</b></ListItem>
-                <ListItem><AgeSearch onValueChange={this.updateAge}/></ListItem>
+                <ListItem><AgeSearch onValueChange={this.updateAge} /></ListItem>
                 <ListItem><b>Family Status</b></ListItem>
-                <ListItem><FamilySearch onValueChange={this.updateFamily}/></ListItem>
+                <ListItem><FamilySearch onValueChange={this.updateFamily} /></ListItem>
+                <ListItem><Button onClick={this.searchLocations}>Search</Button></ListItem>
 
 
             </List>
@@ -130,8 +162,16 @@ class LeafletMap extends React.Component {
 
 
 
+
                     <TileLayer url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png' />
                     {/* <Circle center={position} fillColor="blue" radius={200} /> */}
+                    {this.state.markers.map((position, idx) =>
+                        <Marker key={`marker-${idx}`} position={position}>
+                            <Popup>
+                                Suitable for living!
+                            </Popup>
+                        </Marker>
+                    )}
 
                 </MapContainer>
 

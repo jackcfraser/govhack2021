@@ -65,7 +65,7 @@ class Header extends React.Component {
 				windowTitle = 'Home';
 			break;
 			case 'http://localhost:3000/Map':
-				windowTitle = 'Leaflet Project';
+				windowTitle = 'Find My Home';
 			break;
 			default:
 				windowTitle = '404 Page Not Found';
