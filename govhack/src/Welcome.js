@@ -2,7 +2,6 @@ import React from 'react';
 import { Grid, Typography } from '@material-ui/core';
 import styled from 'styled-components';
 import './App.css';
-import CitySearch from './LeafletMap/CitySearch';
 
 const GridContainer = styled(Grid)`
   padding-top: 15%;
@@ -15,7 +14,6 @@ class Welcome extends React.Component {
                 <Grid item xs={3} />
                 <Grid item xs={6}>
                     <Typography variant="h2" align="center">Welcome</Typography><br />
-                    <CitySearch />
                     <Typography variant="h5" align="center">Click the menu item to get started</Typography>
                 </Grid>
                 <Grid item xs={3} />
