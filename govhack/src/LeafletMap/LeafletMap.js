@@ -50,6 +50,7 @@ class LeafletMap extends React.Component {
     }
 
     componentDidMount() {
+        //this.addMarker();
     }
 
     updateRegion = event => {
