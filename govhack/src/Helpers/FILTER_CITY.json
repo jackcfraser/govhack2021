@@ -1,0 +1,100 @@
+{
+    "cities": [
+        {
+            "value": "1RNSW",
+            "label": "Rest of NSW",
+            "long": 149.58423299700007,
+            "lat": -35.44426999899997
+        },
+        {
+            "value": "1GSYD",
+            "label": "Greater Sydney",
+            "long": 151.4137275700001,
+            "lat": -33.46559324899994
+        },
+        {
+            "value": "2RVIC",
+            "label": "Rest of Vic.",
+            "long": 143.70476799200003,
+            "lat": -37.51935300599996
+        },
+        {
+            "value": "2GMEL",
+            "label": "Greater Melbourne",
+            "long": 144.94974047000005,
+            "lat": -37.76276897499997
+        },
+        {
+            "value": "3GBRI",
+            "label": "Greater Brisbane",
+            "long": 153.2114830580001,
+            "lat": -27.521319953999978
+        },
+        {
+            "value": "3RQLD",
+            "label": "Rest of Qld",
+            "long": 145.709053,
+            "lat": -16.896518002999926
+        },
+        {
+            "value": "4GADE",
+            "label": "Greater Adelaide",
+            "long": 138.58095902000002,
+            "lat": -34.93024470599994
+        },
+        {
+            "value": "4RSAU",
+            "label": "Rest of SA",
+            "long": 139.014737759,
+            "lat": -34.506855610999935
+        },
+        {
+            "value": "5RWAU",
+            "label": "Rest of WA",
+            "long": 114.998587917,
+            "lat": -34.041806995999934
+        },
+        {
+            "value": "5GPER",
+            "label": "Greater Perth",
+            "long": 115.62125776900007,
+            "lat": -32.626011337999955
+        },
+        {
+            "value": "6GHOB",
+            "label": "Greater Hobart",
+            "long": 147.1885624680001,
+            "lat": -42.73541757199996
+        },
+        {
+            "value": "6RTAS",
+            "label": "Rest of Tas.",
+            "long": 147.1248383960001,
+            "lat": -41.41613820899994
+        },
+        {
+            "value": "7GDAR",
+            "label": "Greater Darwin",
+            "long": 130.86969169400004,
+            "lat": -12.425022455999965
+        },
+        {
+            "value": "7RNTE",
+            "label": "Rest of NT",
+            "long": 133.85519368100006,
+            "lat": -23.684877107999966
+        },
+        {
+            "value": "8ACTE",
+            "label": "Australian Capital Territory",
+            "long": 149.07409629500012,
+            "lat": -35.255299417999936
+        },
+        {
+            "value": "9OTER",
+            "label": "Other Territories",
+            "long": 105.67391901000008,
+            "lat": -10.415673001999949
+        }
+    ]
+}

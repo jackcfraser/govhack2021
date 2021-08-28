@@ -7,7 +7,6 @@ import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import MapIcon from '@material-ui/icons/Map';
 import HomeIcon from '@material-ui/icons/Home';
-import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import { Drawer } from '@material-ui/core';
 import { List, ListItem, ListItemIcon, ListItemText } from '@material-ui/core';
 import { Route, Link, BrowserRouter as Router } from 'react-router-dom';
@@ -65,7 +64,7 @@ class Header extends React.Component {
 				windowTitle = 'Home';
 			break;
 			case 'http://localhost:3000/Map':
-				windowTitle = 'Leaflet Project';
+				windowTitle = 'Find My Home';
 			break;
 			default:
 				windowTitle = '404 Page Not Found';

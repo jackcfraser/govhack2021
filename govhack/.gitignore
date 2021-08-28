@@ -21,3 +21,6 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+# Too big, probably needs to go into a db
+SA2_BOUNDS.json
