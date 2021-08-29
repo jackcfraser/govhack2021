@@ -26,12 +26,102 @@ class DataHelper {
 
 
 	static getErpBySa2(SA2) {
+		var mainList = [];
 
-		// TODO
+		for (let obj in SA2.features) {
+			mainList.push({ SA2_MAIN16: SA2.features[obj].properties['SA2_MAIN16'], data: {}, isComplete: false })
+		}
+
+		var promiseArray = [];
+		var notComplete = true;
+		var counter = 0;
+		var batchSize = 10;
+		var totalBatched = 0;
+		var tokens;
+		var batchCounter = 0;
+
+		while (notComplete) {
+			tokens = "";
+			counter = 0;
+			mainList.forEach(function (obj, index) {
+				if (!obj.isComplete && counter < batchSize) {
+					tokens += obj.SA2_MAIN16 + "+";
+					counter++;
+					totalBatched++;
+					obj.isComplete = true;
+				}
+			});
+
+			tokens = tokens.substring(0, tokens.length - 1);
+
+			if (totalBatched < mainList.length) {
+				batchCounter++;
+				promiseArray.push(new Promise((resolve, reject) => {
+					try {
+						var callStart = "https://api.data.abs.gov.au/data/ERP_ASGS2016/ERP.3+1+2.TT+A04+A59+A10+A15+A20+A25+A30+A35+A40+A45+A50+A55+A60+A65+A70+A75+A80+8599.AUS+STE+SA4+SA3+SA2+GCCSA.";
+						var callEnd = ".A/all?startPeriod=2016&format=jsondata";
+						var callURL = callStart + tokens + callEnd;
+
+						fetch(callURL)
+							.then(res => res.json())
+							.then(
+								(result) => {
+									resolve(result);
+								},
+								(error) => {
+									reject(error);
+								}
+							);
+
+					} catch (e) {
+						console.log("Catch error");
+						console.log(e);
+					}
+				}));
+			} else {
+				notComplete = false;
+			}
+		}
+
+		console.log("batchCounter: " + batchCounter);
+
+		Promise.all(promiseArray).then(result => {
+			console.log(result);
+		}, (error) => {
+			console.log(error);
+		});
+
+
+
+		// for (var obj in mainList && (counter < batchSize)) {
+		// 	console.log("looping");
+		// 	if (!obj.isComplete) {
+		// 		tokens += obj.SA2_MAIN16 + "+";
+		// 		counter++;
+		// 		totalBatched++;
+		// 		console.log("Adding");
+		// 		mainList[obj].isComplete = true;
+		// 	} else {
+		// 		console.log("Already Completed");
+		// 	}
+
+		// }
+
+		// console.log("end loop");
+
+		// if (totalBatched !== mainList.length) {
+		// 	console.log(tokens);
+		// } else {
+		// 	notComplete = false;
+		// }
+
+		counter = 0;
+		// }
 
 		/*
 			Make an array of promise objects, use Promise.all() to resolve them.
 
+			
 			var total_batched = 0
 
 			while(not done){
@@ -73,12 +163,12 @@ class DataHelper {
 		// while (!isProcessed){
 		// 	for(var obj in mainList){
 		// 		if(!obj.isComplete){
-					
+
 		// 		}
 		// 	}
-			
+
 		// }
-		
+
 	}
 }
 
